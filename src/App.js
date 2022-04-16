@@ -1,23 +1,46 @@
-import logo from './logo.svg';
+import {useState, useEffect} from 'react';
 import './App.css';
+import Search from './components/search/search';
+import ShowData from './components/showData/showData';
 
 function App() {
+
+  const [data, setData] = useState([])
+  const [showData, setShowData] = useState([])
+
+  useEffect(() => {
+
+    let movieData=[]
+    const fetchData = async () => {
+      let response = await fetch('https://hexanovate-1oc3v5uf6-thephenom1708.vercel.app/api/movies')
+      movieData = await response.json()
+      setData(movieData)
+      setShowData(movieData)
+    }
+
+    fetchData()
+    
+  }, [])
+  
+
+  const handleFilter = (e) => {
+    console.log(e)
+
+    let x = data.filter(item => {
+
+      if(item.title.includes(e))
+        return true
+      else
+        return false
+    })
+
+    setShowData(x)
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Search handleFilter={handleFilter}  />
+      <ShowData data={showData}/>
     </div>
   );
 }

@@ -1,0 +1,15 @@
+.showData{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.showData ul{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.showData ul li{
+}
